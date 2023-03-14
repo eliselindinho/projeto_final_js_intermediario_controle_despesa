@@ -34,7 +34,6 @@ input {
 
 .home {
   width: 100%;
-  margin: 10px;
 }
 
 .monitoringHome {
@@ -49,8 +48,8 @@ input {
 
 #filter {
   display: flex;
-  justify-content: center;
   margin-top: 60px;
+  margin-left: 7%;
 }
 
 .typeInputText {
@@ -113,6 +112,7 @@ table:nth-child(odd) {
 .buttonblue {
   width: 108px;
   height: 42px;
+  margin-top: 10px;
   background-color: #2196f3;
   color: white;
   border: #2196f3;

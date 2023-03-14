@@ -37,7 +37,15 @@ function activeExpense(active, desactive) {
   expense.classList.add("active");
 }
 
+expense.addEventListener("click", function activeExpense() {});
+
 function activeCategory(active, desactive) {
   expense.classList.remove("active");
   category.classList.add("active");
 }
+
+category.addEventListener("click", function activeCategory() {});
+
+addExpense.remove();
+categoryRegister.remove();
+modalAddEditCategory.remove();
