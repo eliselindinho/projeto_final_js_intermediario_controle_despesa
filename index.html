@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controle de Despesas Online</title>
+    <link rel="stylesheet" href="./css/sistema.css" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav id="headerNavigation">
+      <a href="#expenses" id="expenses">Despesas</a>
+      <spam id="bar">|</spam>
+      <a href="#category" id="category">Categorias</a>
+    </nav>
+    <section id="home">
+      <div id="screenMonitoring" class="monitoringHome">
+        <div id="monitoringTotalPaid" class="totalPaid">TOTAL PAGO</div>
+        <div id="monitoringTotalPayable" class="totalPayable">
+          TOTAL A PAGAR
+        </div>
+        <div id="monitoringLate" class="late">ATRASADAS</div>
+      </div>
+      <div id="filter">
+        <label for="name" class="textFilter"
+          >Filtrar
+          <input type="text" id="categoryFilterHome" class="filterTextToType" />
+          <input
+            type="button"
+            id="buttonFilter"
+            class="buttonblue"
+            value="FILTRAR"
+          />
+        </label>
+      </div>
+      <div id="homePageTable">
+        <table>
+          <thead id="headerTableHomePage">
+            <tr class="homePageTableHeader">
+              <td class="headTable">Data de Vencimento</td>
+              <td class="headTable">| Despesa</td>
+              <td class="headTable">| Valor</td>
+              <td class="headTable">| Status</td>
+            </tr>
+          </thead>
+          <tbody id="bodyTableHomePage"></tbody>
+        </table>
+      </div>
+      <div>
+        <button id="buttonAddExpenseTriggerModal" class="buttonblue">
+          ADICIONAR DESPESA
+        </button>
+      </div>
+    </section>
+    <section id="addExpense">
+      <div id="modalAddExpense" class="pageAddExpense">
+        <h1 id="addExpenseTitleModal" class="titlePages">ADICIONAR DESPESAS</h1>
+        <div id="tableHeader">
+          <h3 class="modalInput">Categoria</h3>
+          <input
+            id="categoryAddExpense"
+            type="text"
+            placeholder="Busque a categoria"
+          />
+          <h3 class="modalInput">Data de Vencimento</h3>
+          <input
+            id="dueDateAddExpense"
+            type="number"
+            class="filterTextToType"
+          />
+          <h3 class="modalInput">Despesa</h3>
+          <input id="valueAddExpense" type="number" class="filterTextToType" />
+        </div>
+        <button id="saveAddExpense" class="buttonblue">SALVAR</button>
+        <button id="cancelAddExpense" class="buttonCancel">CANCELAR</button>
+      </div>
+    </section>
+    <section id="categoryRegister">
+      <div class="pageRegisterCategory">
+        <h1 id="registationCategory" class="titlePages">
+          CADASTRO DE CATEGORIA
+        </h1>
+        <div id="filter">
+          <label for="name" class="textFilter"
+            >Filtrar
+            <input
+              type="text"
+              id="categoryFilterRegister"
+              class="filterTextToType"
+            />
+            <input
+              type="button"
+              id="buttonFilterCategory"
+              class="buttonblue"
+              value="FILTRAR"
+            />
+          </label>
+        </div>
+        <div id="addExpense">
+          <h1 id="addExpenseTitleModal" class="titlePages">
+            ADICIONAR CATEGORIA
+          </h1>
+          <table>
+            <thead id="headerTableCategoryRegister">
+              <tr class="categoryRegisterTableHeader">
+                <td>ID</td>
+                <td>Categoria</td>
+                <td>Ações</td>
+              </tr>
+            </thead>
+            <tbody id="bodyTableAddCategory"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section id="modalAddEditCategory">
+      <div class="pageAddEditCategory">
+        <h1 id="addEditCategory" class="titlePages">
+          ADICIONAR/ EDITAR CATEGORIA
+        </h1>
+        <div id="categoryEditAdd">
+          <label for="name" class="textFilter"
+            >Categoria
+            <input
+              type="text"
+              id="categoryFilterEditAdd"
+              class="filterTextToType"
+            />
+          </label>
+          <button id="buttonSave" class="buttonblue">SALVAR</button>
+          <button id="buttonForCancel" class="buttonCancel">CANCELAR</button>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script src="sistema.js"></script>
+</html>

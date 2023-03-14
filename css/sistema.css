@@ -1,0 +1,215 @@
+@import url("reset.css");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+* {
+  font-family: var(--font-family-project);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+}
+
+#headerNavigation {
+  padding: 10px;
+  background-color: #0acf83;
+  text-align: right;
+}
+
+#expenses,
+#category,
+#bar {
+  color: white;
+  font-weight: 900;
+  font-family: var(--font-family-project);
+  padding: 25px;
+}
+
+.home {
+  width: 100%;
+  margin: 10px;
+}
+
+.monitoringHome {
+  display: flex;
+  margin-top: 60px;
+  margin-right: 15%;
+  margin-left: 15%;
+  padding: 5px;
+  background-color: white;
+  border-radius: 5px solid;
+}
+
+#filter {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.filterTextToType {
+  width: 450px;
+  height: 25px;
+}
+
+#buttonFilter,
+#buttonFilterCategory {
+  display: inline;
+}
+
+.textFilter {
+  margin-left: 40px;
+  font-family: var(--font-family-project);
+  font-weight: 400;
+  font-size: 12px;
+  color: #00000085;
+}
+
+#categoryFilter {
+  margin-left: 36px;
+  width: 450px;
+  height: 25px;
+}
+
+table {
+  display: flex;
+  justify-content: space-between;
+}
+
+#homePageTable {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-top: 40px;
+  background-color: #f3f6f9;
+  width: 80%;
+}
+
+tr:nth-child(odd) {
+  background-color: #f3f6f9;
+  border-bottom: solid 2px #f3f6f9be;
+}
+
+.homePageTableHeader {
+  font-family: var(--font-family-project);
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000e0;
+}
+
+.headTable {
+  padding: 20px 80px;
+}
+
+.buttonblue {
+  width: 108px;
+  height: 42px;
+  background-color: #2196f3;
+  color: white;
+  border: #2196f3;
+  border-radius: 5px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12);
+}
+
+#addExpense {
+  display: none;
+}
+
+#buttonAddExpenseTriggerModal {
+  width: 200px;
+  height: 42px;
+  margin-top: 20px;
+  margin-right: 10%;
+  float: right;
+}
+
+.buttonCancel {
+  width: 120px;
+  height: 42px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  color: #d32f2f;
+  border: #d32f2f;
+}
+
+.monitoringHome {
+  display: flex;
+}
+
+.totalPaid,
+.totalPayable,
+.late {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 130px;
+  padding: 20px;
+  margin: 10px;
+  font-family: var(--font-family-project);
+  font-weight: 700;
+  font-size: 24px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px rgba(255, 255, 255, 0.445);
+}
+
+.totalPaid {
+  border-bottom: 5px solid #178d46;
+}
+
+.totalPayable {
+  border-bottom: 5px solid #ff0000;
+}
+
+.late {
+  border-bottom: 5px solid #ffb800;
+}
+
+#fade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 5;
+}
+
+#modalAddExpense {
+  position: fixed;
+  left: 60%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  z-index: 10;
+  width: 500px;
+  max-width: 95%;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px #ffffff6e;
+}
+
+.addExpenseTitleModal,
+.titlePages {
+  text-align: center;
+  color: #2196f3;
+  font-family: var(--font-family-project);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.modalInput {
+  font-family: var(--font-family-project);
+  font-weight: 400;
+  font-size: 12px;
+  color: #00000077;
+}
+
+.pageRegisterCategory,
+.pageAddEditCategory,
+.pageAddExpense {
+  display: none;
+}
