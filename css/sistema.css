@@ -12,6 +12,11 @@ body {
   width: 100%;
 }
 
+input {
+  border: none;
+  border-bottom: 4px solid #f3f6f9be;
+}
+
 #headerNavigation {
   padding: 10px;
   background-color: #0acf83;
@@ -48,7 +53,7 @@ body {
   margin-top: 60px;
 }
 
-.filterTextToType {
+.typeInputText {
   width: 450px;
   height: 25px;
 }
@@ -86,7 +91,7 @@ table {
   width: 80%;
 }
 
-tr:nth-child(odd) {
+table:nth-child(odd) {
   background-color: #f3f6f9;
   border-bottom: solid 2px #f3f6f9be;
 }
@@ -111,10 +116,6 @@ tr:nth-child(odd) {
   border-radius: 5px;
   box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
     0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12);
-}
-
-#addExpense {
-  display: none;
 }
 
 #buttonAddExpenseTriggerModal {
@@ -178,7 +179,8 @@ tr:nth-child(odd) {
   z-index: 5;
 }
 
-#modalAddExpense {
+#modalAddExpense,
+#modalAddEditCategory {
   position: fixed;
   left: 60%;
   top: 50%;
@@ -192,9 +194,12 @@ tr:nth-child(odd) {
   box-shadow: 1px 1px 1px #ffffff6e;
 }
 
-.addExpenseTitleModal,
+#titlePage {
+  display: flex;
+  justify-content: center;
+}
+
 .titlePages {
-  text-align: center;
   color: #2196f3;
   font-family: var(--font-family-project);
   font-size: 24px;
@@ -211,5 +216,5 @@ tr:nth-child(odd) {
 .pageRegisterCategory,
 .pageAddEditCategory,
 .pageAddExpense {
-  display: none;
+  display: block;
 }

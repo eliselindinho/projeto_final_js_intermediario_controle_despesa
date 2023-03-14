@@ -31,13 +31,17 @@
       <div id="filter">
         <label for="name" class="textFilter"
           >Filtrar
-          <input type="text" id="categoryFilterHome" class="filterTextToType" />
-          <input
-            type="button"
-            id="buttonFilter"
-            class="buttonblue"
-            value="FILTRAR"
-          />
+          <div>
+            <input type="text" id="categoryFilterHome" class="typeInputText" />
+          </div>
+          <div>
+            <input
+              type="button"
+              id="buttonFilter"
+              class="buttonblue"
+              value="FILTRAR"
+            />
+          </div>
         </label>
       </div>
       <div id="homePageTable">
@@ -61,22 +65,31 @@
     </section>
     <section id="addExpense">
       <div id="modalAddExpense" class="pageAddExpense">
-        <h1 id="addExpenseTitleModal" class="titlePages">ADICIONAR DESPESAS</h1>
+        <div id="titlePage">
+          <h1 class="titlePages">ADICIONAR DESPESAS</h1>
+        </div>
         <div id="tableHeader">
-          <h3 class="modalInput">Categoria</h3>
-          <input
-            id="categoryAddExpense"
-            type="text"
-            placeholder="Busque a categoria"
-          />
-          <h3 class="modalInput">Data de Vencimento</h3>
-          <input
-            id="dueDateAddExpense"
-            type="number"
-            class="filterTextToType"
-          />
-          <h3 class="modalInput">Despesa</h3>
-          <input id="valueAddExpense" type="number" class="filterTextToType" />
+          <div>
+            <h3 class="modalInput">Categoria</h3>
+            <input
+              id="categoryAddExpense"
+              type="text"
+              class="typeInputText"
+              placeholder="Busque a categoria"
+            />
+          </div>
+          <div>
+            <h3 class="modalInput">Data de Vencimento</h3>
+            <input id="dueDateAddExpense" type="number" class="typeInputText" />
+          </div>
+          <div>
+            <h3 class="modalInput">Despesa</h3>
+            <input id="valueAddExpense" type="number" class="typeInputText" />
+          </div>
+          <div>
+            <h3 class="modalInput">Valor</h3>
+            <input id="valueAddExpense" type="number" class="typeInputText" />
+          </div>
         </div>
         <button id="saveAddExpense" class="buttonblue">SALVAR</button>
         <button id="cancelAddExpense" class="buttonCancel">CANCELAR</button>
@@ -84,29 +97,37 @@
     </section>
     <section id="categoryRegister">
       <div class="pageRegisterCategory">
-        <h1 id="registationCategory" class="titlePages">
-          CADASTRO DE CATEGORIA
-        </h1>
+        <div id="titlePage">
+          <h1 id="registationCategory" class="titlePages">
+            CADASTRO DE CATEGORIA
+          </h1>
+        </div>
         <div id="filter">
           <label for="name" class="textFilter"
             >Filtrar
-            <input
-              type="text"
-              id="categoryFilterRegister"
-              class="filterTextToType"
-            />
-            <input
-              type="button"
-              id="buttonFilterCategory"
-              class="buttonblue"
-              value="FILTRAR"
-            />
+            <div>
+              <input
+                type="text"
+                id="categoryFilterRegister"
+                class="typeInputText"
+              />
+            </div>
+            <div>
+              <input
+                type="button"
+                id="buttonFilterCategory"
+                class="buttonblue"
+                value="FILTRAR"
+              />
+            </div>
           </label>
         </div>
         <div id="addExpense">
-          <h1 id="addExpenseTitleModal" class="titlePages">
-            ADICIONAR CATEGORIA
-          </h1>
+          <div>
+            <h1 id="addExpenseTitleModal" class="titlePages">
+              CADASTRO DE CATEGORIA
+            </h1>
+          </div>
           <table>
             <thead id="headerTableCategoryRegister">
               <tr class="categoryRegisterTableHeader">
@@ -122,16 +143,18 @@
     </section>
     <section id="modalAddEditCategory">
       <div class="pageAddEditCategory">
-        <h1 id="addEditCategory" class="titlePages">
-          ADICIONAR/ EDITAR CATEGORIA
-        </h1>
+        <div id="titlePage">
+          <h1 id="addEditCategory" class="titlePages">
+            ADICIONAR/ EDITAR CATEGORIA
+          </h1>
+        </div>
         <div id="categoryEditAdd">
           <label for="name" class="textFilter"
             >Categoria
             <input
               type="text"
               id="categoryFilterEditAdd"
-              class="filterTextToType"
+              class="typeInputText"
             />
           </label>
           <button id="buttonSave" class="buttonblue">SALVAR</button>
