@@ -81,6 +81,16 @@ input {
   margin-left: 25px;
 }
 
+.modalInput {
+  font-family: var(--font-family-project);
+  font-weight: 400;
+  font-size: 12px;
+  color: #00000077;
+  margin-top: 20px;
+  margin-left: 25px;
+  padding: 5px;
+}
+
 #buttonFilter,
 #buttonFilterCategory {
   display: inline;
@@ -95,28 +105,15 @@ input {
 }
 
 .textFilterPage {
-  margin-left: 20px;
+  margin-left: 0px;
   font-family: var(--font-family-project);
   font-weight: 400;
   font-size: 12px;
   color: #00000085;
-  margin-left: 40px;
-}
-
-#categoryFilter {
-  margin-left: 20px;
-  width: 450px;
-  height: 25px;
 }
 
 .textCategory {
   display: block;
-}
-
-#bodyTableAddCategory tr:nth-child(odd),
-#bodyTableHomePage tr:nth-child(odd) {
-  background-color: #f3f6f9;
-  border-bottom: solid 10px #f3f6f991;
 }
 
 #headerTableHomePage td,
@@ -124,19 +121,14 @@ input {
 #headerTableCategoryRegister td,
 #bodyTableAddCategory td {
   align-items: center;
-  padding: 10px 40px;
-}
-
-thead {
-  gap: 40px;
+  padding: 1px 30px;
 }
 
 #homePageTable,
 #registerCategoryPageInitial {
-  margin: auto;
-  margin-top: 40px;
-  background-color: #f3f6f9;
-  width: 80%;
+  padding: 3% 10%;
+  margin-left: 20%;
+  justify-content: space-between;
 }
 
 .homePageTableHeader,
@@ -145,11 +137,26 @@ thead {
   font-weight: 400;
   font-size: 16px;
   color: #000000e0;
+  padding: 20px 50px;
+}
+
+#tableHeader {
+  padding: 10px;
 }
 
 .headTable {
-  padding: 20px 80px;
   color: #000000de;
+  background-color: #f3f6f9;
+}
+
+tr:nth-child(odd) {
+  background-color: white;
+  border-bottom: solid 5px #f3f6f991;
+}
+
+tr:nth-child(even) {
+  background-color: #f3f6f9;
+  border-bottom: solid 5px #f3f6f991;
 }
 
 #categoryAddExpense {
@@ -158,7 +165,7 @@ thead {
 
 #pageCategory,
 #modalAddExpense {
-  width: 70%;
+  width: 50%;
 }
 
 .buttonModal {
@@ -170,8 +177,8 @@ thead {
   justify-content: center;
   width: 108px;
   height: 42px;
-  margin-top: 30px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   background-color: #2196f3;
   color: white;
   border: #2196f3;
@@ -181,9 +188,8 @@ thead {
 }
 
 .buttonblueTable {
-  justify-content: center;
-  width: 50px;
-  height: 25px;
+  width: 60px;
+  height: 30px;
   margin-top: 30px;
   margin-bottom: 20px;
   background-color: #2196f3;
@@ -197,8 +203,8 @@ thead {
 .buttonCancel {
   width: 120px;
   height: 42px;
-  margin-top: 30px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
@@ -207,8 +213,9 @@ thead {
 }
 
 .buttonCancelTable {
-  width: 50px;
-  height: 25px;
+  width: 60px;
+  height: 30px;
+  padding: 5px;
   margin-top: 30px;
   margin-bottom: 20px;
   background: #ffffff;
@@ -293,6 +300,7 @@ thead {
 #titlePage {
   display: flex;
   justify-content: center;
+  padding: 20px;
 }
 
 .titlePages {
@@ -302,18 +310,8 @@ thead {
   font-weight: 500;
 }
 
-.modalInput {
-  font-family: var(--font-family-project);
-  font-weight: 400;
-  font-size: 12px;
-  color: #00000077;
-  margin-top: 40px;
-  margin-left: 5px;
-  padding: 5px;
-}
-
-/* .pageRegisterCategory,
+.pageRegisterCategory,
 .pageAddEditCategory,
 .pageAddExpense {
   display: block;
-} */
+}

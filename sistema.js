@@ -1,3 +1,8 @@
+// let listCategoryRegister = JSON.parse(localStorage.getItem("listCategory"));
+// let listCategory = listCategoryRegister ?? [];
+
+let listCategory = [];
+
 const expense = document.querySelector("#expenses");
 const category = document.querySelector("#category");
 const home = document.querySelector("#home");
@@ -17,8 +22,7 @@ const modalAddExpense = document.querySelector("#modalAddExpense");
 const categoryAddExpense = document.querySelector("#categoryAddExpense");
 const dueDateAddExpense = document.querySelector("#dueDateAddExpense");
 const valueAddExpense = document.querySelector("#valueAddExpense");
-let valueAddExpenseMoney = document.querySelector("#valueAddExpense");
-const saveAddExpense = document.querySelector("#saveAddExpense");
+const valueAddExpenseMoney = document.querySelector("#valueAddExpense");
 const categoryFilterRegister = document.querySelector(
   "#categoryFilterRegister"
 );
@@ -34,9 +38,12 @@ const categoryFilterEditAdd = document.querySelector("#categoryFilterEditAdd");
 const typeInputText = document.querySelectorAll(".typeInputText");
 
 const buttonFilter = document.querySelector("#buttonFilter");
-const buttonCancelAddExpense = document.querySelector("#cancelAddExpense");
+const buttonCancelAddExpense = document.querySelector(
+  "#buttonCancelAddExpense"
+);
 const buttonFilterCategory = document.querySelector("#buttonFilterCategory");
 const buttonSave = document.querySelector("#buttonSave");
+const buttonSaveAddExpense = document.querySelector("#buttonSaveAddExpense");
 const buttonForCancel = document.querySelector("#buttonForCancel");
 const buttonAddExpenseTriggerModal = document.querySelector(
   "#buttonAddExpenseTriggerModal"
@@ -44,6 +51,7 @@ const buttonAddExpenseTriggerModal = document.querySelector(
 const buttonPageRegisterCategory = document.querySelector(
   "#buttonPageRegisterCategory"
 );
+const filterClean = document.querySelector("#filterClean");
 
 const numberId = 1000;
 
@@ -94,12 +102,7 @@ buttonForCancel.addEventListener("click", hideModalCategory);
 
 // Salvar as categorias que serão criadas.
 
-const arrRegisterCategory = [
-  {
-    id: 1005,
-    nome: "Elis",
-  },
-];
+const arrRegisterCategory = [];
 let numberRegisterId = 1000;
 
 function saveRegisterCategory() {
@@ -109,9 +112,8 @@ function saveRegisterCategory() {
     nome: categoryFilterEditAdd.value,
   };
   arrRegisterCategory.push(objetCategory);
-  console.log(arrRegisterCategory);
   cleanInput();
-  showCategories();
+  showCategories(arrRegisterCategory);
 }
 
 buttonSave.addEventListener("click", () => saveRegisterCategory());
@@ -123,88 +125,84 @@ function cleanInput() {
 
 // Função que lista todas as categorias na tabela.
 
-// function showCategories() {
-//   let listCategory = "";
-//   arrRegisterCategory.forEach((category) => {
-//     listCategory += `<tr>
-//       <td>${category.id}</td>
-//       <td>${category.nome}</td>
-//       <td>
-//       </td>
-//     </tr>`;
-//   });
-
-//   bodyTableAddCategory.innerHTML = listCategory;
-// }
-// showCategories();
-
-function showCategories() {
-  arrRegisterCategory.forEach((category) => {
-    bodyTableAddCategory.innerHTML += `
-    <tr>
-      <td>${category.id}</td>
-      <td>${category.nome}</td>
-      <td><button type="button" class="buttonblueTable">Editar
+function showCategories(array) {
+  let listCategories = "";
+  array.forEach((category) => {
+    listCategories += `<tr>
+    <td>${category.id}</td>
+    <td>${category.nome}</td>
+      <td><button type="button" id="btnEditList" class="buttonblueTable">Editar
       </button>
-      </td>
-      <td><button type="button" class="buttonCancelTable">Excluir
+      <button type="button" id="btnDeleteList" class="buttonCancelTable" onclick = "removeCategory(${category.id})">Excluir
       </button>
       </td>
     </tr>`;
   });
+  bodyTableAddCategory.innerHTML = listCategories;
 }
-showCategories();
 
-// Salvar as categorias que serão criadas.
+function removeCategory(id) {
+  arrRegisterCategory.filter((category, indice) => {
+    if (id == category.id) {
+      arrRegisterCategory.splice(indice, 1);
+    }
+  });
+  showCategories(arrRegisterCategory);
+}
 
-const arrExpense = [];
-const dataVencimento = [];
+//Função para filtrar categorias.
+
+categoryFilterRegister.addEventListener("keyup", () => {
+  let meetCategory = categoryFilterRegister.value.toLowerCase().trim();
+  let categoryFiltered = arrRegisterCategory.filter((category) => {
+    let compareCategory = category.nome.toLowerCase().startsWith(meetCategory);
+    return compareCategory;
+  });
+  showCategories(categoryFiltered);
+  cleanInput();
+});
 
 function dateExpense() {
   let dateCurrent = new Date();
   let datePayment = new Date(
     dateCurrent.setDate(dateCurrent.getDate() + 30)
   ).toLocaleDateString("pt-BR");
-  datePayment.push(dueDateAddExpense);
+  dueDateAddExpense.value = datePayment;
 }
-dateExpense();
+
+// Função salvar despesas
+
+const arrExpense = [];
 
 function saveExpense() {
-  dataVencimento = dueDateAddExpense.value;
   const objetExpense = {
     dataVencimento: dateExpense(),
     despesa: valueAddExpense.value,
-    valor: valueAddExpenseMoney.setAttribute(
-      `${objectProduct.price.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      })}`
-    ),
+    valor: valueAddExpenseMoney.value,
   };
   arrExpense.push(objetExpense);
-  console.log(arrExpense);
+  insertExpenseInHtml(arrExpense);
   cleanInput();
-  saveExpense();
 }
-console.log(saveExpense);
+buttonSaveAddExpense.addEventListener("click", () => saveExpense());
 
-buttonSave.addEventListener("click", () => saveRegisterCategory());
+// Salvar as despesas que serão criadas, inserindo no HTML
 
-// Função que lista todas as despesas pagas, a pagar e atrasadas.
-
-function expenseList() {
+function insertExpenseInHtml(array) {
   let listExpense = "";
-  arrExpense.forEach((expense) => {
-    listExpense += `<tr>
-      <td>${expense.id}</td>
-      <td>${expense.nome}</td>
-      <td>
-      </td>
-    </tr>`;
+  array.forEach((expense) => {
+    listExpense += `
+    <tr>
+    <td>${expense.dataVencimento}</td>
+    <td>${expense.despesa}</td>
+    <td>${expense.valor}</td>
+    <td>
+    <button type="button" class="btnChangeStatus" onclick="changeStatus()">Pendência</button></td>
+  </tr>`;
   });
-
-  bodyTableHomePage.innerHTML = listCategory;
+  bodyTableHomePage.innerHTML = listExpense;
 }
-expenseList();
 
-// TOTAL PAGO TOTAL A PAGAR ATRASADO - USAR O REDUCE
+// Mudar status da despesa.
+
+// // TOTAL PAGO TOTAL A PAGAR ATRASADO - USAR O REDUCE

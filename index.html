@@ -62,7 +62,6 @@
               <td class="headTable">| Status</th>
             </tr>
           </thead>
-
           <tbody id="bodyTableHomePage"></tbody>
         </table>
       </div>
@@ -92,7 +91,7 @@
             <h3 class="modalInput">Data de Vencimento</h3>
             <input
               id="dueDateAddExpense"
-              type="number"
+              type="date"
               class="typeInputText"
               readonly
             />
@@ -105,17 +104,21 @@
             <h3 class="modalInput">Valor</h3>
             <input
               id="valueAddExpenseMoney"
-              type="number"
+              type="text"
+              inputmode="currency"
+              pattern="^\$\d{1,3}(,\d{3})*(\.\d{2})?$"
+              lang="pt-BR"
+              step="0.01"
               class="typeInputText"
             />
           </div>
         </div>
         <div class="buttonModal">
           <div class="btnStyle">
-            <button id="saveAddExpense" class="buttonblue">SALVAR</button>
+            <button id="buttonSaveAddExpense" class="buttonblue">SALVAR</button>
           </div>
           <div class="btnStyle">
-            <button id="cancelAddExpense" class="buttonCancel">CANCELAR</button>
+            <button id="buttonCancelAddExpense" class="buttonCancel">CANCELAR</button>
           </div>
         </div>
       </div>
