@@ -213,7 +213,6 @@ buttonSaveAddExpense.addEventListener("click", () => saveExpense());
 // Salvar as despesas que serão criadas, inserindo no HTML
 
 function insertExpenseInHtml() {
-  cleanInput();
   let listExpense = "";
   arrExpense.forEach((expense) => {
     listExpense += `
