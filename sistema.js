@@ -2,6 +2,7 @@
 // let listCategory = listCategoryRegister ?? [];
 
 let listCategory = [];
+const arrStatus = [];
 
 const expense = document.querySelector("#expenses");
 const category = document.querySelector("#category");
@@ -129,17 +130,9 @@ function cleanInput() {
 }
 
 // Função buscar categoria.
-const arrSearchCategories = [];
-function categoriesSearch() {
-  const objSearchCategories = {
-    opção1: Alimentação,
-    opção2: Convênio,
-    opção3: ContasFixas,
-    opção4: CartãoCredito,
-    opção5: Escola,
-    opção6: Lazer,
-  };
-  arrSearchCategories.push(objSearchCategories);
+
+function categoriesSearch(category) {
+  const objSearchCategories = bodyTableAddCategory.value;
 }
 
 // Função que lista todas as categorias na tabela.
@@ -189,10 +182,6 @@ function dateExpense() {
   dueDateAddExpense.setAttribute("placeholder", `${datePayment}`);
 }
 
-//Inserindo símbolo monetário ao input valor no modal adicionar despesas.
-
-valueAddExpenseMoney.setAttribute("placeholder", "R$00.00");
-
 // Função salvar despesas
 
 const arrExpense = [];
@@ -201,8 +190,11 @@ function saveExpense() {
   const objetExpense = {
     dataVencimento: dateExpense(),
     despesa: valueAddExpense.value,
-    valor: valueAddExpenseMoney.value,
-    status: "Pendência",
+    valor: valueAddExpenseMoney.value.toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }),
+    status: "Pendente",
   };
   arrExpense.push(objetExpense);
   insertExpenseInHtml(arrExpense);
@@ -216,55 +208,69 @@ function insertExpenseInHtml() {
   let listExpense = "";
   arrExpense.forEach((expense) => {
     listExpense += `
-    <tr>
-    <td>${expense.dataVencimento}</td>
-    <td>${expense.despesa}</td>
-    <td>${expense.valor}</td>
-    <td>
-    <button type="button" id='btnChangeStatus' onclick="changeStatus()">PENDENTE</button></td>
-  </tr>`;
+      <tr>
+      <td>${expense.dataVencimento}</td>
+      <td>${expense.despesa}</td>
+      <td>${expense.valor}</td>
+      <td>
+      <button type="button" id='btnChangeStatus' onclick="changeStatus()">PENDENTE</button></td>
+    </tr>`;
   });
   bodyTableHomePage.innerHTML = listExpense;
 }
 
 // Mudar status da despesa.
 
-let changeStatus = (expense) => {
+let changeStatus = (objetExpense) => {
+  arrStatus.map((expense) => {
+    if (expense.arrStatus == objetExpense) {
+      if (expense.status == "Pendente") {
+        expense.status = "Pago";
+      } else if (expense.status == "Pago") {
+        expense.status = "Atrasado";
+      }
+    }
+    return expense;
+  });
+  insertExpenseInHtml();
+};
+
+let validateStatus = (status) => {
   let statusExpense = "";
-  switch (expense) {
-    case "PENDENTE":
-      statusExpense = "PENDENTE";
+  switch (status) {
+    case "Pendente":
+      statusExpense = "pending";
       break;
-    case "PAGO":
-      statusExpense = "PAGO";
+    case "Pago":
+      statusExpense = "paid";
       break;
-    case "ATRASADO":
-      statusExpense = "ATRASADO";
+    case "Atrasado":
+      statusExpense = "late";
       break;
   }
   return statusExpense;
 };
 btnChangeStatus.addEventListener("click", changeStatus);
 
-const typeExpense = [
-  {
-    dataVencimento: dateExpense(),
-    despesa: valueAddExpense.value,
-    valor: valueAddExpenseMoney.value,
-    status: changeStatus(),
-  },
-];
-
-typeExpense.map((status) => {});
+// const typeExpense = [
+//   {
+//     dataVencimento: dateExpense(),
+//     despesa: valueAddExpense.value,
+//     valor: valueAddExpenseMoney.value,
+//     status: changeStatus(),
+//   },
+// ];
 
 // Função para mostrar quantidades no card da página principal
 
-const typeCardExpense = () => {
+const cardExpensePaid = () => {
   let cardPaymentsPaid = arrExpense.reduce((acumulador, expense) => {
     return (acumulador += expense.valor), 0;
   }, 0);
   cardTotalPaid.innerHTML = `${cardPaymentsPaid}`;
+};
 
+const cardExpensePayable = () => {
   let cardPayamentsPayable = arrExpense.reduce((acumulador, expense) => {
     return (acumulador += expense.valor), 0;
   }, 0);
