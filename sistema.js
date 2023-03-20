@@ -14,7 +14,10 @@ const monitoringTotalPayable = document.querySelector(
   "#monitoringTotalPayable"
 );
 const monitoringLate = document.querySelector("#monitoringLate");
-const categoryFilter = document.querySelector("#categoryFilterHome");
+const cardTotalPaid = document.querySelector("#cardTotalPaid");
+const cardTotalPayable = document.querySelector("#cardTotalPayable");
+const cardTotalLate = document.querySelector("#cardTotalLate");
+const categoryFilterHome = document.querySelector("#categoryFilterHome");
 const homePageTable = document.querySelector("#homePageTable");
 const bodyTableHomePage = document.querySelector("#bodyTableHomePage");
 const modalButtonAddExpense = document.querySelector("#modalButtonAddExpense");
@@ -51,6 +54,7 @@ const buttonAddExpenseTriggerModal = document.querySelector(
 const buttonPageRegisterCategory = document.querySelector(
   "#buttonPageRegisterCategory"
 );
+const btnChangeStatus = document.querySelector("#btnChangeStatus");
 const filterClean = document.querySelector("#filterClean");
 
 const numberId = 1000;
@@ -114,6 +118,7 @@ function saveRegisterCategory() {
   arrRegisterCategory.push(objetCategory);
   cleanInput();
   showCategories(arrRegisterCategory);
+  categoriesSearch(arrSearchCategories);
 }
 
 buttonSave.addEventListener("click", () => saveRegisterCategory());
@@ -121,6 +126,20 @@ buttonSave.addEventListener("click", () => saveRegisterCategory());
 // Limpar o input depois que clicar em salvar.
 function cleanInput() {
   typeInputText.forEach((input) => (input.value = ""));
+}
+
+// Função buscar categoria.
+const arrSearchCategories = [];
+function categoriesSearch() {
+  const objSearchCategories = {
+    opção1: Alimentação,
+    opção2: Convênio,
+    opção3: ContasFixas,
+    opção4: CartãoCredito,
+    opção5: Escola,
+    opção6: Lazer,
+  };
+  arrSearchCategories.push(objSearchCategories);
 }
 
 // Função que lista todas as categorias na tabela.
@@ -167,8 +186,12 @@ function dateExpense() {
   let datePayment = new Date(
     dateCurrent.setDate(dateCurrent.getDate() + 30)
   ).toLocaleDateString("pt-BR");
-  dueDateAddExpense.value = datePayment;
+  dueDateAddExpense.setAttribute("placeholder", `${datePayment}`);
 }
+
+//Inserindo símbolo monetário ao input valor no modal adicionar despesas.
+
+valueAddExpenseMoney.setAttribute("placeholder", "R$00.00");
 
 // Função salvar despesas
 
@@ -179,6 +202,7 @@ function saveExpense() {
     dataVencimento: dateExpense(),
     despesa: valueAddExpense.value,
     valor: valueAddExpenseMoney.value,
+    status: "Pendência",
   };
   arrExpense.push(objetExpense);
   insertExpenseInHtml(arrExpense);
@@ -188,16 +212,17 @@ buttonSaveAddExpense.addEventListener("click", () => saveExpense());
 
 // Salvar as despesas que serão criadas, inserindo no HTML
 
-function insertExpenseInHtml(array) {
+function insertExpenseInHtml() {
+  cleanInput();
   let listExpense = "";
-  array.forEach((expense) => {
+  arrExpense.forEach((expense) => {
     listExpense += `
     <tr>
     <td>${expense.dataVencimento}</td>
     <td>${expense.despesa}</td>
     <td>${expense.valor}</td>
     <td>
-    <button type="button" class="btnChangeStatus" onclick="changeStatus()">Pendência</button></td>
+    <button type="button" id='btnChangeStatus' onclick="changeStatus()">PENDENTE</button></td>
   </tr>`;
   });
   bodyTableHomePage.innerHTML = listExpense;
@@ -205,4 +230,56 @@ function insertExpenseInHtml(array) {
 
 // Mudar status da despesa.
 
-// // TOTAL PAGO TOTAL A PAGAR ATRASADO - USAR O REDUCE
+let changeStatus = (expense) => {
+  let statusExpense = "";
+  switch (expense) {
+    case "PENDENTE":
+      statusExpense = "PENDENTE";
+      break;
+    case "PAGO":
+      statusExpense = "PAGO";
+      break;
+    case "ATRASADO":
+      statusExpense = "ATRASADO";
+      break;
+  }
+  return statusExpense;
+};
+btnChangeStatus.addEventListener("click", changeStatus);
+
+const typeExpense = [
+  {
+    dataVencimento: dateExpense(),
+    despesa: valueAddExpense.value,
+    valor: valueAddExpenseMoney.value,
+    status: changeStatus(),
+  },
+];
+
+typeExpense.map((status) => {});
+
+// Função para mostrar quantidades no card da página principal
+
+const typeCardExpense = () => {
+  let cardPaymentsPaid = arrExpense.reduce((acumulador, expense) => {
+    return (acumulador += expense.valor), 0;
+  }, 0);
+  cardTotalPaid.innerHTML = `${cardPaymentsPaid}`;
+
+  let cardPayamentsPayable = arrExpense.reduce((acumulador, expense) => {
+    return (acumulador += expense.valor), 0;
+  }, 0);
+  cardTotalPayable.innerHTML = `${arrExpense.length - cardPayamentsPayable}`;
+};
+
+//Função filtrar despesas
+
+categoryFilterHome.addEventListener("keyup", () => {
+  let meetExpense = categoryFilterHome.value.toLowerCase().trim();
+  let expenseFiltered = arrExpense.filter((expense) => {
+    let compareExpense = expense.despesa.toLowerCase().startsWith(meetExpense);
+    return compareExpense;
+  });
+  insertExpenseInHtml(expenseFiltered);
+  cleanInput();
+});

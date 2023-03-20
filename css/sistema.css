@@ -19,6 +19,13 @@ input {
   height: 30px;
 }
 
+h3 {
+  justify-content: center;
+  color: black;
+  font-family: var(--font-family-project);
+  font-weight: 300;
+}
+
 #headerNavigation {
   padding: 10px;
   background-color: #0acf83;
@@ -62,6 +69,9 @@ input {
   background-color: white;
   border-radius: 5px solid;
 }
+.cardPayament {
+  padding: 20px;
+}
 
 #filter {
   display: flex;
@@ -72,13 +82,14 @@ input {
 .typeInputText {
   width: 450px;
   height: 25px;
-  margin-left: 25px;
+  margin-left: 30px;
 }
 
 .typeInputTextPage {
   width: 450px;
   height: 25px;
-  margin-left: 25px;
+  margin-left: 5px;
+  margin-top: 10px;
 }
 
 .modalInput {
@@ -105,7 +116,7 @@ input {
 }
 
 .textFilterPage {
-  margin-left: 0px;
+  margin-left: 20px;
   font-family: var(--font-family-project);
   font-weight: 400;
   font-size: 12px;
@@ -238,13 +249,25 @@ tr:nth-child(even) {
   float: right;
 }
 
+#btnChangeStatus {
+  justify-content: center;
+  width: 108px;
+  height: 42px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: red;
+  color: white;
+  border: red;
+  border-radius: 5px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12);
+}
+
 .monitoringHome {
   display: flex;
 }
 
-.totalPaid,
-.totalPayable,
-.late {
+.typePayament {
   display: flex;
   justify-content: center;
   text-align: center;
@@ -259,15 +282,18 @@ tr:nth-child(even) {
   border-radius: 5px rgba(255, 255, 255, 0.445);
 }
 
-.totalPaid {
+#monitoringTotalPaid {
+  display: flex;
   border-bottom: 5px solid #178d46;
 }
 
-.totalPayable {
+#monitoringTotalPayable {
+  display: flex;
   border-bottom: 5px solid #ff0000;
 }
 
-.late {
+#monitoringLate {
+  display: flex;
   border-bottom: 5px solid #ffb800;
 }
 
