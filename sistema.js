@@ -26,10 +26,11 @@ const modalAddExpense = document.querySelector("#modalAddExpense");
 const categoryAddExpense = document.querySelector("#categoryAddExpense");
 const dueDateAddExpense = document.querySelector("#dueDateAddExpense");
 const valueAddExpense = document.querySelector("#valueAddExpense");
-const valueAddExpenseMoney = document.querySelector("#valueAddExpense");
+const valueAddExpenseMoney = document.querySelector("#valueAddExpenseMoney");
 const categoryFilterRegister = document.querySelector(
   "#categoryFilterRegister"
 );
+const pageCategory = document.querySelector("#pageCategory");
 const headerTableCategoryRegister = document.querySelector(
   "#headerTableCategoryRegister"
 );
@@ -162,6 +163,13 @@ function removeCategory(id) {
   showCategories(arrRegisterCategory);
 }
 
+// Função para editar categoria
+
+function editCategory() {
+  modalAddEditCategory.style.display = "block";
+  categoryRegister.style.display = "none";
+}
+
 //Função para filtrar categorias.
 
 categoryFilterRegister.addEventListener("keyup", () => {
@@ -174,13 +182,25 @@ categoryFilterRegister.addEventListener("keyup", () => {
   cleanInput();
 });
 
-function dateExpense() {
-  let dateCurrent = new Date();
-  let datePayment = new Date(
-    dateCurrent.setDate(dateCurrent.getDate() + 30)
-  ).toLocaleDateString("pt-BR");
-  dueDateAddExpense.setAttribute("placeholder", `${datePayment}`);
+//Função formatar valor
+
+function formataValor(valor) {
+  let dinheiro = Number(valor);
+  dinheiro = dinheiro.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+  return dinheiro;
 }
+
+// function dateExpense() {
+//   let dateCurrent = new Date();
+//   let datePayment = new Date(
+//     dateCurrent.setDate(dateCurrent.getDate() + 30)
+//   ).toLocaleDateString("pt-BR");
+//   dueDateAddExpense.setAttribute("placeholder", `${datePayment}`);
+//   return datePayment;
+// }
 
 // Função salvar despesas
 
@@ -188,12 +208,9 @@ const arrExpense = [];
 
 function saveExpense() {
   const objetExpense = {
-    dataVencimento: dateExpense(),
+    dataVencimento: dueDateAddExpense.value,
     despesa: valueAddExpense.value,
-    valor: valueAddExpenseMoney.value.toLocaleString("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }),
+    valor: formataValor(valueAddExpenseMoney.value),
     status: "Pendente",
   };
   arrExpense.push(objetExpense);
