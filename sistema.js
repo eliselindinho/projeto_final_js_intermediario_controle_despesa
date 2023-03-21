@@ -100,6 +100,7 @@ buttonCancelAddExpense.addEventListener("click", hideModalExpense);
 
 function editionModalCategory() {
   modalAddEditCategory.style.display = "block";
+  buttonSave.setAttribute("onclick", `saveRegisterCategory()`);
 }
 
 buttonPageRegisterCategory.addEventListener("click", editionModalCategory);
@@ -125,8 +126,9 @@ function saveRegisterCategory() {
   arrRegisterCategory.push(objetCategory);
   cleanInput();
   showCategories(arrRegisterCategory);
-  categoriesSearch(arrSearchCategories);
+  saveLocalCategory();
 }
+buttonSave.setAttribute("onclick", `saveRegisterCategory()`);
 
 // Limpar o input depois que clicar em salvar.
 function cleanInput() {
@@ -135,14 +137,15 @@ function cleanInput() {
 
 // Função buscar categoria.
 
-function categoriesSearch(category) {
-  const objSearchCategories = bodyTableAddCategory.value;
-}
+// function categoriesSearch(category) {
+//   const objSearchCategories = bodyTableAddCategory.value;
+// }
 
 // Função que lista todas as categorias na tabela.
 
 function showCategories(array) {
   let listCategories = "";
+  categoryAddExpense.innerHTML = "";
   array.forEach((category) => {
     listCategories += `<tr>
     <td>${category.id}</td>
@@ -152,6 +155,8 @@ function showCategories(array) {
       </button>
       </td>
     </tr>`;
+
+    categoryAddExpense.innerHTML += `<option value="${category.nome}">${category.nome}</option>`;
   });
   bodyTableAddCategory.innerHTML = listCategories;
 }
@@ -163,7 +168,28 @@ function removeCategory(id) {
     }
   });
   showCategories(arrRegisterCategory);
+  saveLocalCategory();
 }
+
+// Função salvar local as categorias.
+
+function saveLocalCategory() {
+  localStorage.setItem("arquivoCategoria", JSON.stringify(arrRegisterCategory));
+}
+
+function restaurarCategory() {
+  const categoryRestarad = JSON.parse(localStorage.getItem("arquivoCategoria"));
+  for (let e of categoryRestarad) {
+    numberRegisterId++;
+    const objetCategory = {
+      id: e.id,
+      nome: e.nome,
+    };
+    arrRegisterCategory.push(objetCategory);
+  }
+  showCategories(arrRegisterCategory);
+}
+restaurarCategory();
 
 // Função para editar categoria
 
@@ -185,6 +211,7 @@ function editCategory(id) {
     }
   });
   showCategories(arrRegisterCategory);
+  saveLocalCategory();
   cleanInput();
 }
 
@@ -239,9 +266,9 @@ buttonSaveAddExpense.addEventListener("click", () => saveExpense());
 
 // Salvar as despesas que serão criadas, inserindo no HTML
 
-function insertExpenseInHtml() {
+function insertExpenseInHtml(array) {
   let listExpense = "";
-  arrExpense.forEach((expense) => {
+  array.forEach((expense) => {
     listExpense += `
       <tr>
       <td>${expense.dataVencimento}</td>
@@ -279,32 +306,6 @@ function changeStatus() {
 }
 btnChangeStatusPending.onclick = changeStatus();
 
-// let validateStatus = (status) => {
-//   let statusExpense = "";
-//   switch (status) {
-//     case "Pendente":
-//       statusExpense = "pending";
-//       break;
-//     case "Pago":
-//       statusExpense = "paid";
-//       break;
-//     case "Atrasado":
-//       statusExpense = "late";
-//       break;
-//   }
-//   return statusExpense;
-// };
-// btnChangeStatusPending.addEventListener("click", changeStatus);
-
-// const typeExpense = [
-//   {
-//     dataVencimento: dateExpense(),
-//     despesa: valueAddExpense.value,
-//     valor: valueAddExpenseMoney.value,
-//     status: changeStatus(),
-//   },
-// ];
-
 // Função para mostrar quantidades no card da página principal
 
 const cardExpensePaid = () => {
@@ -326,8 +327,12 @@ const cardExpensePayable = () => {
 categoryFilterHome.addEventListener("keyup", () => {
   let meetExpense = categoryFilterHome.value.toLowerCase().trim();
   let expenseFiltered = arrExpense.filter((expense) => {
-    let compareExpense = expense.status.toLowerCase().startsWith(meetExpense);
-    return compareExpense;
+    return (
+      expense.status.toLowerCase().includes(meetExpense) ||
+      expense.despesa.toLowerCase().includes(meetExpense) ||
+      expense.dataVencimento.includes(meetExpense) ||
+      expense.valor.includes(meetExpense)
+    );
   });
   insertExpenseInHtml(expenseFiltered);
   cleanInput();
