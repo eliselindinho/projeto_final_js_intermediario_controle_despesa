@@ -135,12 +135,6 @@ function cleanInput() {
   typeInputText.forEach((input) => (input.value = ""));
 }
 
-// Função buscar categoria.
-
-// function categoriesSearch(category) {
-//   const objSearchCategories = bodyTableAddCategory.value;
-// }
-
 // Função que lista todas as categorias na tabela.
 
 function showCategories(array) {
@@ -238,26 +232,21 @@ function formataValor(valor) {
   return dinheiro;
 }
 
-// function dateExpense() {
-//   let dateCurrent = new Date();
-//   let datePayment = new Date(
-//     dateCurrent.setDate(dateCurrent.getDate() + 30)
-//   ).toLocaleDateString("pt-BR");
-//   dueDateAddExpense.setAttribute("placeholder", `${datePayment}`);
-//   return datePayment;
-// }
-
 // Função salvar despesas
 
 const arrExpense = [];
+const stats = false;
+let cod = 0;
 
 function saveExpense() {
   const objetExpense = {
     dataVencimento: dueDateAddExpense.value,
     despesa: valueAddExpense.value,
     valor: formataValor(valueAddExpenseMoney.value),
-    status: "Pendente",
+    status: stats,
+    codigo: cod,
   };
+  cod++;
   arrExpense.push(objetExpense);
   insertExpenseInHtml(arrExpense);
   saveLocalExpense();
@@ -276,9 +265,11 @@ function insertExpenseInHtml(array) {
       <td>${expense.despesa}</td>
       <td>${expense.valor}</td>
       <td>
-      <button type="button" id='btnChangeStatusPending' onclick="changeStatus()">PENDENTE</button>
-      <button type="button" id='btnChangeStatusPaid'>PAGO</button>
-      <button type="button" id='btnChangeStatusLate'>ATRASADO</button>
+      <button type="button" id='${
+        expense.status ? "btnChangeStatusPaid" : "btnChangeStatusPending"
+      }' onclick="changeStatus(${expense.id})">${
+      expense.status ? "PAGO" : "PENDENTE"
+    }</button>
       </td>
     </tr>`;
   });
@@ -287,25 +278,15 @@ function insertExpenseInHtml(array) {
 
 // Mudar status da despesa.
 
-// function changeStatus() {
-//   if ((onclick = btnChangeStatusPending)) {
-//     btnChangeStatusPending.disabled == true;
-//     btnChangeStatusPaid.disabled == false;
-//   } else {
-//     btnChangeStatusPaid.disable == true;
-//     btnChangeStatusPending.disable == false;
-//   }
-//   if ((onclick = btnChangeStatusPaid)) {
-//     btnChangeStatusPaid.disabled == true;
-//     btnChangeStatusLate.disabled == false;
-//   } else {
-//     btnChangeStatusLate.disable == true;
-//     btnChangeStatusPaid.disable == false;
-//   }
-//   insertExpenseInHtml();
-//   cleanInput();
-// }
-// btnChangeStatusPending.onclick = changeStatus();
+function changeStatus(id) {
+  arrExpense.filter((expense, index) => {
+    if (expense.id == id) {
+      arrExpense[index].status = arrExpense[index].status ? false : true;
+    }
+  });
+  insertExpenseInHtml(arrExpense);
+  saveLocalExpense();
+}
 
 // Função para mostrar quantidades no card da página principal
 
@@ -353,6 +334,7 @@ function restaurarExpense() {
       despesa: e.despesa,
       valor: e.valor,
       status: e.status,
+      codigo: e.codigo,
     };
     arrExpense.push(objetExpense);
   }
