@@ -249,19 +249,17 @@ function insertExpenseInHtml() {
       <td>${expense.valor}</td>
       <td>
       <button type="button" id='btnChangeStatusPending' onclick="changeStatus()">PENDENTE</button>
-      <button type="button" id='btnChangeStatusPaid' onclick="changeStatus()">PAGO</button>
-      <button type="button" id='btnChangeStatusLate' onclick="changeStatus()">ATRASADO</button>
+      <button type="button" id='btnChangeStatusPaid'>PAGO</button>
+      <button type="button" id='btnChangeStatusLate'>ATRASADO</button>
       </td>
     </tr>`;
   });
   bodyTableHomePage.innerHTML = listExpense;
 }
 
-meuBotao.onclick = function () {
-  meuBotao.disabled = true; // desabilita o botão
   // Mudar status da despesa.
 
-  let changeStatus = () => {
+  btnChangeStatusPending.onclick = changeStatus(){
     if ((onclick = btnChangeStatusPending)) {
       btnChangeStatusPending.disabled == true;
       btnChangeStatusPaid.disabled == false;
@@ -297,7 +295,7 @@ let validateStatus = (status) => {
   }
   return statusExpense;
 };
-btnChangeStatus.addEventListener("click", changeStatus);
+btnChangeStatusPending.addEventListener("click", changeStatus);
 
 // const typeExpense = [
 //   {
