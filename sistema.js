@@ -257,45 +257,44 @@ function insertExpenseInHtml() {
   bodyTableHomePage.innerHTML = listExpense;
 }
 
-  // Mudar status da despesa.
+// Mudar status da despesa.
 
-  btnChangeStatusPending.onclick = changeStatus(){
-    if ((onclick = btnChangeStatusPending)) {
-      btnChangeStatusPending.disabled == true;
-      btnChangeStatusPaid.disabled == false;
-    } else {
-      btnChangeStatusPaid.disable == true;
-      btnChangeStatusPending.disable == false;
-    }
-    if ((onclick = btnChangeStatusPaid)) {
-      btnChangeStatusPaid.disabled == true;
-      btnChangeStatusLate.disabled == false;
-    } else {
-      btnChangeStatusLate.disable == true;
-      btnChangeStatusPaid.disable == false;
-    }
-  };
-
+function changeStatus() {
+  if ((onclick = btnChangeStatusPending)) {
+    btnChangeStatusPending.disabled == true;
+    btnChangeStatusPaid.disabled == false;
+  } else {
+    btnChangeStatusPaid.disable == true;
+    btnChangeStatusPending.disable == false;
+  }
+  if ((onclick = btnChangeStatusPaid)) {
+    btnChangeStatusPaid.disabled == true;
+    btnChangeStatusLate.disabled == false;
+  } else {
+    btnChangeStatusLate.disable == true;
+    btnChangeStatusPaid.disable == false;
+  }
   insertExpenseInHtml();
   cleanInput();
-};
+}
+btnChangeStatusPending.onclick = changeStatus();
 
-let validateStatus = (status) => {
-  let statusExpense = "";
-  switch (status) {
-    case "Pendente":
-      statusExpense = "pending";
-      break;
-    case "Pago":
-      statusExpense = "paid";
-      break;
-    case "Atrasado":
-      statusExpense = "late";
-      break;
-  }
-  return statusExpense;
-};
-btnChangeStatusPending.addEventListener("click", changeStatus);
+// let validateStatus = (status) => {
+//   let statusExpense = "";
+//   switch (status) {
+//     case "Pendente":
+//       statusExpense = "pending";
+//       break;
+//     case "Pago":
+//       statusExpense = "paid";
+//       break;
+//     case "Atrasado":
+//       statusExpense = "late";
+//       break;
+//   }
+//   return statusExpense;
+// };
+// btnChangeStatusPending.addEventListener("click", changeStatus);
 
 // const typeExpense = [
 //   {
