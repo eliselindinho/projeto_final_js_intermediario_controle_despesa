@@ -260,6 +260,7 @@ function saveExpense() {
   };
   arrExpense.push(objetExpense);
   insertExpenseInHtml(arrExpense);
+  saveLocalExpense();
   cleanInput();
 }
 buttonSaveAddExpense.addEventListener("click", () => saveExpense());
@@ -286,25 +287,25 @@ function insertExpenseInHtml(array) {
 
 // Mudar status da despesa.
 
-function changeStatus() {
-  if ((onclick = btnChangeStatusPending)) {
-    btnChangeStatusPending.disabled == true;
-    btnChangeStatusPaid.disabled == false;
-  } else {
-    btnChangeStatusPaid.disable == true;
-    btnChangeStatusPending.disable == false;
-  }
-  if ((onclick = btnChangeStatusPaid)) {
-    btnChangeStatusPaid.disabled == true;
-    btnChangeStatusLate.disabled == false;
-  } else {
-    btnChangeStatusLate.disable == true;
-    btnChangeStatusPaid.disable == false;
-  }
-  insertExpenseInHtml();
-  cleanInput();
-}
-btnChangeStatusPending.onclick = changeStatus();
+// function changeStatus() {
+//   if ((onclick = btnChangeStatusPending)) {
+//     btnChangeStatusPending.disabled == true;
+//     btnChangeStatusPaid.disabled == false;
+//   } else {
+//     btnChangeStatusPaid.disable == true;
+//     btnChangeStatusPending.disable == false;
+//   }
+//   if ((onclick = btnChangeStatusPaid)) {
+//     btnChangeStatusPaid.disabled == true;
+//     btnChangeStatusLate.disabled == false;
+//   } else {
+//     btnChangeStatusLate.disable == true;
+//     btnChangeStatusPaid.disable == false;
+//   }
+//   insertExpenseInHtml();
+//   cleanInput();
+// }
+// btnChangeStatusPending.onclick = changeStatus();
 
 // Função para mostrar quantidades no card da página principal
 
@@ -337,3 +338,25 @@ categoryFilterHome.addEventListener("keyup", () => {
   insertExpenseInHtml(expenseFiltered);
   cleanInput();
 });
+
+//Função salvar local Despesas
+
+function saveLocalExpense() {
+  localStorage.setItem("arquivoDespesa", JSON.stringify(arrExpense));
+}
+
+function restaurarExpense() {
+  const expenseRestarad = JSON.parse(localStorage.getItem("arquivoDespesa"));
+  for (let e of expenseRestarad) {
+    const objetExpense = {
+      dataVencimento: e.dataVencimento,
+      despesa: e.despesa,
+      valor: e.valor,
+      status: e.status,
+    };
+    arrExpense.push(objetExpense);
+  }
+  insertExpenseInHtml(arrExpense);
+  console.log(arrExpense);
+}
+restaurarExpense();
