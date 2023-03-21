@@ -56,7 +56,12 @@ const buttonAddExpenseTriggerModal = document.querySelector(
 const buttonPageRegisterCategory = document.querySelector(
   "#buttonPageRegisterCategory"
 );
-const btnChangeStatus = document.querySelector("#btnChangeStatus");
+const btnChangeStatusPending = document.querySelector(
+  "#btnChangeStatusPending"
+);
+const btnChangeStatusPaid = document.querySelector("#btnChangeStatusPaid");
+const btnChangeStatusLate = document.querySelector("#btnChangeStatusLate");
+
 const filterClean = document.querySelector("#filterClean");
 
 const numberId = 1000;
@@ -123,8 +128,6 @@ function saveRegisterCategory() {
   categoriesSearch(arrSearchCategories);
 }
 
-buttonSave.addEventListener("click", () => saveRegisterCategory());
-
 // Limpar o input depois que clicar em salvar.
 function cleanInput() {
   typeInputText.forEach((input) => (input.value = ""));
@@ -144,9 +147,8 @@ function showCategories(array) {
     listCategories += `<tr>
     <td>${category.id}</td>
     <td>${category.nome}</td>
-      <td><button type="button" id="btnEditList" class="buttonblueTable">Editar
-      </button>
-      <button type="button" id="btnDeleteList" class="buttonCancelTable" onclick = "removeCategory(${category.id})">Excluir
+      <td><button type="button" id="btnEditList" class="buttonblueTable" onclick="showEditCategory('${category.id}', '${category.nome}')">Editar</button>
+      <button type="button" id="btnDeleteList" class="buttonCancelTable" onclick="removeCategory(${category.id})">Excluir
       </button>
       </td>
     </tr>`;
@@ -165,9 +167,25 @@ function removeCategory(id) {
 
 // Função para editar categoria
 
-function editCategory() {
+function showEditCategory(id, nome) {
   modalAddEditCategory.style.display = "block";
-  categoryRegister.style.display = "none";
+  categoryFilterEditAdd.value = nome;
+
+  buttonSave.setAttribute("onclick", `editCategory(${id})`);
+}
+
+function editCategory(id) {
+  arrRegisterCategory.map((category) => {
+    if (category.id == id) {
+      if (categoryFilterEditAdd.value.trim() == "") {
+        alert("Digite uma categoria.");
+      } else {
+        category.nome = categoryFilterEditAdd.value.trim();
+      }
+    }
+  });
+  showCategories(arrRegisterCategory);
+  cleanInput();
 }
 
 //Função para filtrar categorias.
@@ -230,26 +248,38 @@ function insertExpenseInHtml() {
       <td>${expense.despesa}</td>
       <td>${expense.valor}</td>
       <td>
-      <button type="button" id='btnChangeStatus' onclick="changeStatus()">PENDENTE</button></td>
+      <button type="button" id='btnChangeStatusPending' onclick="changeStatus()">PENDENTE</button>
+      <button type="button" id='btnChangeStatusPaid' onclick="changeStatus()">PAGO</button>
+      <button type="button" id='btnChangeStatusLate' onclick="changeStatus()">ATRASADO</button>
+      </td>
     </tr>`;
   });
   bodyTableHomePage.innerHTML = listExpense;
 }
 
-// Mudar status da despesa.
+meuBotao.onclick = function () {
+  meuBotao.disabled = true; // desabilita o botão
+  // Mudar status da despesa.
 
-let changeStatus = (objetExpense) => {
-  arrStatus.map((expense) => {
-    if (expense.arrStatus == objetExpense) {
-      if (expense.status == "Pendente") {
-        expense.status = "Pago";
-      } else if (expense.status == "Pago") {
-        expense.status = "Atrasado";
-      }
+  let changeStatus = () => {
+    if ((onclick = btnChangeStatusPending)) {
+      btnChangeStatusPending.disabled == true;
+      btnChangeStatusPaid.disabled == false;
+    } else {
+      btnChangeStatusPaid.disable == true;
+      btnChangeStatusPending.disable == false;
     }
-    return expense;
-  });
+    if ((onclick = btnChangeStatusPaid)) {
+      btnChangeStatusPaid.disabled == true;
+      btnChangeStatusLate.disabled == false;
+    } else {
+      btnChangeStatusLate.disable == true;
+      btnChangeStatusPaid.disable == false;
+    }
+  };
+
   insertExpenseInHtml();
+  cleanInput();
 };
 
 let validateStatus = (status) => {
@@ -299,7 +329,7 @@ const cardExpensePayable = () => {
 categoryFilterHome.addEventListener("keyup", () => {
   let meetExpense = categoryFilterHome.value.toLowerCase().trim();
   let expenseFiltered = arrExpense.filter((expense) => {
-    let compareExpense = expense.despesa.toLowerCase().startsWith(meetExpense);
+    let compareExpense = expense.status.toLowerCase().startsWith(meetExpense);
     return compareExpense;
   });
   insertExpenseInHtml(expenseFiltered);
