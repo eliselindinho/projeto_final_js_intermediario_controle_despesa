@@ -240,7 +240,7 @@ let cod = 0;
 
 function saveExpense() {
   const objetExpense = {
-    dataVencimento: dueDateAddExpense.value,
+    dataVencimento: dateExpense(dueDateAddExpense.value),
     despesa: valueAddExpense.value,
     valor: formataValor(valueAddExpenseMoney.value),
     status: stats,
@@ -253,6 +253,17 @@ function saveExpense() {
   cleanInput();
 }
 buttonSaveAddExpense.addEventListener("click", () => saveExpense());
+
+//Função formatar data.
+
+function dateExpense(date) {
+  let dataEntrada = date;
+  let converteData = new Date(dataEntrada);
+  let dia = converteData.getDate() + 1;
+  let mes = converteData.getMonth() + 1;
+  let ano = converteData.getFullYear();
+  return `${dia >= 10 ? dia : `0${dia}`}/${mes >= 10 ? mes : `0${mes}`}/${ano}`;
+}
 
 // Salvar as despesas que serão criadas, inserindo no HTML
 
@@ -267,20 +278,35 @@ function insertExpenseInHtml(array) {
       <td>
       <button type="button" id='${
         expense.status ? "btnChangeStatusPaid" : "btnChangeStatusPending"
-      }' onclick="changeStatus(${expense.id})">${
+      }' onclick="changeStatus(${expense.codigo})">${
       expense.status ? "PAGO" : "PENDENTE"
     }</button>
+    <button class="buttonCancelTable" onclick="removeExpense(${
+      expense.codigo
+    })">Excluir</button>
       </td>
     </tr>`;
   });
   bodyTableHomePage.innerHTML = listExpense;
 }
 
+// Função excluir despesas.
+
+function removeExpense(id) {
+  arrExpense.filter((category, indice) => {
+    if (id == category.codigo) {
+      arrExpense.splice(indice, 1);
+    }
+  });
+  insertExpenseInHtml(arrExpense);
+  saveLocalExpense();
+}
+
 // Mudar status da despesa.
 
 function changeStatus(id) {
   arrExpense.filter((expense, index) => {
-    if (expense.id == id) {
+    if (expense.codigo == id) {
       arrExpense[index].status = arrExpense[index].status ? false : true;
     }
   });
@@ -310,7 +336,6 @@ categoryFilterHome.addEventListener("keyup", () => {
   let meetExpense = categoryFilterHome.value.toLowerCase().trim();
   let expenseFiltered = arrExpense.filter((expense) => {
     return (
-      expense.status.toLowerCase().includes(meetExpense) ||
       expense.despesa.toLowerCase().includes(meetExpense) ||
       expense.dataVencimento.includes(meetExpense) ||
       expense.valor.includes(meetExpense)
