@@ -1,6 +1,3 @@
-// let listCategoryRegister = JSON.parse(localStorage.getItem("listCategory"));
-// let listCategory = listCategoryRegister ?? [];
-
 let listCategory = [];
 const arrStatus = [];
 
@@ -242,7 +239,7 @@ function saveExpense() {
   const objetExpense = {
     dataVencimento: dateExpense(dueDateAddExpense.value),
     despesa: valueAddExpense.value,
-    valor: formataValor(valueAddExpenseMoney.value),
+    valor: valueAddExpenseMoney.value,
     status: stats,
     codigo: cod,
   };
@@ -257,9 +254,11 @@ buttonSaveAddExpense.addEventListener("click", () => saveExpense());
 //Função formatar data.
 
 function dateExpense(date) {
-  let dataEntrada = date;
-  let converteData = new Date(dataEntrada);
-  let dia = converteData.getDate() + 1;
+  const dataEntrada = new Date(date);
+  const timezoneOffset = 180;
+  const newTime = dataEntrada.getTime() + timezoneOffset * 60 * 1000;
+  const converteData = new Date(newTime);
+  let dia = converteData.getDate();
   let mes = converteData.getMonth() + 1;
   let ano = converteData.getFullYear();
   return `${dia >= 10 ? dia : `0${dia}`}/${mes >= 10 ? mes : `0${mes}`}/${ano}`;
@@ -269,12 +268,13 @@ function dateExpense(date) {
 
 function insertExpenseInHtml(array) {
   let listExpense = "";
+  cards();
   array.forEach((expense) => {
     listExpense += `
       <tr>
       <td>${expense.dataVencimento}</td>
       <td>${expense.despesa}</td>
-      <td>${expense.valor}</td>
+      <td>${formataValor(expense.valor)}</td>
       <td>
       <button type="button" id='${
         expense.status ? "btnChangeStatusPaid" : "btnChangeStatusPending"
@@ -367,3 +367,28 @@ function restaurarExpense() {
   console.log(arrExpense);
 }
 restaurarExpense();
+
+//Criando cards
+
+function cards() {
+  let paidTotal = 0;
+  let payable = 0;
+  let late = 0;
+  arrExpense.filter((card) => {
+    if (card.status) paidTotal += Number(card.valor);
+    if (!card.status) payable += Number(card.valor);
+    if (!card.status) late = checkDate(card.dataVencimento, late);
+  });
+  cardTotalPaid.innerHTML = formataValor(paidTotal);
+  cardTotalPayable.innerHTML = formataValor(payable);
+  cardTotalLate.innerHTML = `${late}`;
+}
+
+//Função para checar data.
+
+function checkDate(dataVencimento, late) {
+  const [dia, mes, ano] = dataVencimento.split("/");
+  const data = new Date(`${ano}-${mes}-${dia}`);
+  if (data < new Date()) late++;
+  return late;
+}

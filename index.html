@@ -26,21 +26,23 @@
     </nav>
     <section id="home">
       <div id="screenMonitoring" class="monitoringHome">
-        <div class="cardPayament">
-        <div id="monitoringTotalPaid" class="typePayament">TOTAL PAGO
-        <h3 id="cardTotalPaid"></h3>
-        </div>
-      </div>
-      <div class="cardPayament">
-        <div id="monitoringTotalPayable" class="typePayament">
-          TOTAL A PAGAR
-          <h3 id="cardTotalPayable"></h3>
-      </div>
+        <div class="cardPayament paid">
+          <span class="cardTitle">TOTAL PAGO</span>
+          <!-- <div id="monitoringTotalPaid" class="typePayament"> -->
+            <h3 id="cardTotalPaid" class="cardValue"></h3>
+          <!-- </div> -->
+        </div>  
+      <div class="cardPayament payable">
+        <span class="cardTitle">TOTAL A PAGAR</span>
+        <!-- <div id="monitoringTotalPayable" class="typePayament"> -->
+          <h3 id="cardTotalPayable" class="cardValue"></h3>
+      <!-- </div> -->
     </div>
-      <div class="cardPayament">
-        <div id="monitoringLate" class="typePayament">ATRASADAS
-          <h3 id="cardTotalLate"></h3>
-        </div>
+      <div class="cardPayament late">
+        <span class="cardTitle">ATRASADA</span>
+        <!-- <div id="monitoringLate" class="typePayament"> -->
+          <h3 id="cardTotalLate" class="cardValue"></h3>
+        <!-- </div> -->
       </div>
       </div>
       <div id="filter">

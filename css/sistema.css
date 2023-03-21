@@ -70,7 +70,52 @@ h3 {
   border-radius: 5px solid;
 }
 .cardPayament {
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 12px;
+  width: 342px;
+  height: 125px;
+  /* margin: 10px; */
+  font-family: var(--font-family-project);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px rgba(255, 255, 255, 0.445);
+  /* padding: 20px; */
+}
+
+.cardTitle {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.cardValue {
+  font-size: 36px;
+  font-weight: 400;
+}
+
+.cardPayament.paid .cardValue {
+  color: #178d46;
+}
+
+.cardPayament.payable .cardValue {
+  color: #ff0000;
+}
+
+.cardPayament.late .cardValue {
+  color: #ffb800;
+}
+
+.cardPayament.paid {
+  border-bottom: 5px solid #178d46;
+}
+
+.cardPayament.payable {
+  border-bottom: 5px solid #ff0000;
+}
+
+.cardPayament.late {
+  border-bottom: 5px solid #ffb800;
 }
 
 #filter {
@@ -293,9 +338,10 @@ tr:nth-child(even) {
 
 .monitoringHome {
   display: flex;
+  gap: 18px;
 }
 
-.typePayament {
+/* .typePayament {
   display: flex;
   justify-content: center;
   text-align: center;
@@ -308,14 +354,14 @@ tr:nth-child(even) {
   font-size: 24px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px rgba(255, 255, 255, 0.445);
-}
+} */
 
-#monitoringTotalPaid {
+/* #monitoringTotalPaid {
   display: flex;
-  border-bottom: 5px solid #178d46;
-}
+ 
+} */
 
-#monitoringTotalPayable {
+/* #monitoringTotalPayable {
   display: flex;
   border-bottom: 5px solid #ff0000;
 }
@@ -323,7 +369,7 @@ tr:nth-child(even) {
 #monitoringLate {
   display: flex;
   border-bottom: 5px solid #ffb800;
-}
+} */
 
 #fadeAddExpense,
 #fadeRegisterCategory {
