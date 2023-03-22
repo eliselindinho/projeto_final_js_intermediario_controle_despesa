@@ -99,42 +99,41 @@ function formataValor(valor) {
 //Função para executar mensagem para o usuário e verificar se o input foi preenchido.
 
 buttonSaveAddExpense.onclick = function () {
-  if (input.value.trim()) {
-    const objetExpense = {
-      dataVencimento: dateExpense(dueDateAddExpense.value),
-      despesa: valueAddExpense.value,
-      valor: valueAddExpenseMoney.value,
-      status: stats,
-      codigo: cod,
-    };
-    arrExpense.push(objetExpense);
-    saveMessage();
-    exibirMensagemUsuario(true, "Cadastro realizado com sucesso!");
-    categoryAddExpense.value.trim() === "" ||
-      dueDateAddExpense.value.trim() === "" ||
-      valueAddExpense.value.trim() === "" ||
-      valueAddExpenseMoney.value.trim() === "";
+  let inputCategory = categoryAddExpense.value;
+  let inputDateDue = dueDateAddExpense.value;
+  let inputExpense = valueAddExpense.value.trim();
+  let inputMoney = valueAddExpenseMoney.value.trim();
+  if (
+    inputCategory !== "" &&
+    inputDateDue !== "" &&
+    inputExpense !== "" &&
+    inputMoney !== ""
+  ) {
+    saveExpense(inputCategory, inputDateDue, inputExpense, inputMoney);
+    // saveMessage();
+    // exibirMensagemUsuario(true, "Cadastro realizado com sucesso!");
   } else {
-    exibirMensagemUsuario(false, "Por favor, preencha todos os campos!");
+    alert("Por favor, preencha todos os campos!");
+    // exibirMensagemUsuario(false, "Por favor, preencha todos os campos!");
   }
 };
 
-function exibirMensagemUsuario(
-  sucesso = true,
-  mensagem = "Cadastro realizado com sucesso"
-) {
-  let classeAtual = buttonSaveAddExpense.getAttribute("class");
-  classeAtual = sucesso
-    ? classeAtual.replace("alert-danger", "alert-success")
-    : classeAtual.replace("alert-success", "alert-danger");
+// function exibirMensagemUsuario(
+//   sucesso = true,
+//   mensagem = "Cadastro realizado com sucesso"
+// ) {
+//   let classeAtual = buttonSaveAddExpense.getAttribute("class");
+//   classeAtual = sucesso
+//     ? classeAtual.replace("alert-danger", "alert-success")
+//     : classeAtual.replace("alert-success", "alert-danger");
 
-  buttonSaveAddExpense.setAttribute("class", classeAtual);
-  buttonSaveAddExpense.innerHTML = `  ${mensagem}
-                                    <button
-                                        type="button"
-                                        class="btn-close"
-                                        aria-label="Close"
-                                        onclick="fechaDivMensagemUsuario()"
-                                    ></button>`;
-  buttonSaveAddExpense.removeAttribute("hidden");
-}
+//   buttonSaveAddExpense.setAttribute("class", classeAtual);
+//   buttonSaveAddExpense.innerHTML = `  ${mensagem}
+//                                     <button
+//                                         type="button"
+//                                         class="btn-close"
+//                                         aria-label="Close"
+//                                         onclick="fechaDivMensagemUsuario()"
+//                                     ></button>`;
+//   buttonSaveAddExpense.removeAttribute("hidden");
+// }

@@ -40,7 +40,7 @@ function insertExpenseInHtml(array) {
       </tr>`;
   });
   bodyTableHomePage.innerHTML = listExpense;
-  saveMessage(true, "Despesa incluída com sucesso!");
+  // saveMessage(true, "Despesa incluída com sucesso!");
 }
 
 // Função excluir despesas.
@@ -53,7 +53,7 @@ function removeExpense(id) {
   });
   insertExpenseInHtml(arrExpense);
   saveLocalExpense();
-  saveMessage(true, "Convidado removido co sucesso!");
+  // saveMessage(true, "Despesa removido com sucesso!");
 }
 
 // Mudar status da despesa.
@@ -85,11 +85,12 @@ categoryFilterHome.addEventListener("keyup", () => {
 
 // Função salvar despesas
 
-function saveExpense() {
+function saveExpense(inputCategory, inputDateDue, inputExpense, inputMoney) {
   const objetExpense = {
-    dataVencimento: dateExpense(dueDateAddExpense.value),
-    despesa: valueAddExpense.value,
-    valor: valueAddExpenseMoney.value,
+    category: inputCategory,
+    dataVencimento: dateExpense(inputDateDue),
+    despesa: inputExpense,
+    valor: inputMoney,
     status: stats,
     codigo: cod,
   };
@@ -99,7 +100,7 @@ function saveExpense() {
   saveLocalExpense();
   cleanInput();
 }
-buttonSaveAddExpense.addEventListener("click", () => saveExpense());
+// buttonSaveAddExpense.addEventListener("click", () => saveExpense());
 
 //Função salvar local Despesas
 
@@ -126,21 +127,21 @@ restoreExpense();
 
 //Exibir mensagem de despesa cadastrada com sucesso.
 
-function saveMessage(
-  sucesso = true,
-  mensagem = "Despesa cadastrada com sucesso!"
-) {
-  let messageExpense = fadeAddExpense.getAttribute("class");
-  messageExpense = sucesso
-    ? messageExpense.replace("alert-danger", "alert-sucess")
-    : messageExpense.replace("alert-sucess", "alert-danger");
+// function saveMessage(
+//   sucesso = true,
+//   mensagem = "Despesa cadastrada com sucesso!"
+// ) {
+//   let messageExpense = fadeAddExpense.getAttribute("class");
+//   messageExpense = sucesso
+//     ? messageExpense.replace("alert-danger", "alert-sucess")
+//     : messageExpense.replace("alert-sucess", "alert-danger");
 
-  fadeAddExpense.setAttribute("class", messageExpense);
-  fadeAddExpense.innerHTML = `${mensagem}
-  <button type="button" class="btn-close aria-label="Close" onclick="fechaDivMensagemUsuario()></button>`;
-  fadeAddExpense.removeAttribute("hidden");
-}
+//   fadeAddExpense.setAttribute("class", messageExpense);
+//   fadeAddExpense.innerHTML = `${mensagem}
+//   <button type="button" class="btn-close aria-label="Close" onclick="fechaDivMensagemUsuario()></button>`;
+//   fadeAddExpense.removeAttribute("hidden");
+// }
 
-function fechaDivMensagemUsuario() {
-  fadeAddExpense.setAttribute("hidden", "");
-}
+// function fechaDivMensagemUsuario() {
+//   fadeAddExpense.setAttribute("hidden", "");
+// }
