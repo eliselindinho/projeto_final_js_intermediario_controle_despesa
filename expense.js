@@ -1,3 +1,7 @@
+const arrExpense = [];
+const stats = false;
+let cod = 0;
+
 // Mostrar e  fechar o modal de adição de despesas.
 
 function showModalAddExpense() {
@@ -36,6 +40,7 @@ function insertExpenseInHtml(array) {
       </tr>`;
   });
   bodyTableHomePage.innerHTML = listExpense;
+  saveMessage(true, "Despesa incluída com sucesso!");
 }
 
 // Função excluir despesas.
@@ -48,6 +53,7 @@ function removeExpense(id) {
   });
   insertExpenseInHtml(arrExpense);
   saveLocalExpense();
+  saveMessage(true, "Convidado removido co sucesso!");
 }
 
 // Mudar status da despesa.
@@ -77,13 +83,31 @@ categoryFilterHome.addEventListener("keyup", () => {
   cleanInput();
 });
 
+// Função salvar despesas
+
+function saveExpense() {
+  const objetExpense = {
+    dataVencimento: dateExpense(dueDateAddExpense.value),
+    despesa: valueAddExpense.value,
+    valor: valueAddExpenseMoney.value,
+    status: stats,
+    codigo: cod,
+  };
+  cod++;
+  arrExpense.push(objetExpense);
+  insertExpenseInHtml(arrExpense);
+  saveLocalExpense();
+  cleanInput();
+}
+buttonSaveAddExpense.addEventListener("click", () => saveExpense());
+
 //Função salvar local Despesas
 
 function saveLocalExpense() {
   localStorage.setItem("arquivoDespesa", JSON.stringify(arrExpense));
 }
 
-function restaurarExpense() {
+function restoreExpense() {
   const expenseRestarad = JSON.parse(localStorage.getItem("arquivoDespesa"));
   for (let e of expenseRestarad) {
     const objetExpense = {
@@ -98,4 +122,25 @@ function restaurarExpense() {
   insertExpenseInHtml(arrExpense);
   console.log(arrExpense);
 }
-restaurarExpense();
+restoreExpense();
+
+//Exibir mensagem de despesa cadastrada com sucesso.
+
+function saveMessage(
+  sucesso = true,
+  mensagem = "Despesa cadastrada com sucesso!"
+) {
+  let messageExpense = fadeAddExpense.getAttribute("class");
+  messageExpense = sucesso
+    ? messageExpense.replace("alert-danger", "alert-sucess")
+    : messageExpense.replace("alert-sucess", "alert-danger");
+
+  fadeAddExpense.setAttribute("class", messageExpense);
+  fadeAddExpense.innerHTML = `${mensagem}
+  <button type="button" class="btn-close aria-label="Close" onclick="fechaDivMensagemUsuario()></button>`;
+  fadeAddExpense.removeAttribute("hidden");
+}
+
+function fechaDivMensagemUsuario() {
+  fadeAddExpense.setAttribute("hidden", "");
+}

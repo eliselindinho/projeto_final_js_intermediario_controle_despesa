@@ -68,7 +68,7 @@ function saveLocalCategory() {
   localStorage.setItem("arquivoCategoria", JSON.stringify(arrRegisterCategory));
 }
 
-function restaurarCategory() {
+function restoreCategory() {
   const categoryRestarad = JSON.parse(localStorage.getItem("arquivoCategoria"));
   for (let e of categoryRestarad) {
     numberRegisterId++;
@@ -80,7 +80,7 @@ function restaurarCategory() {
   }
   showCategories(arrRegisterCategory);
 }
-restaurarCategory();
+restoreCategory();
 
 // Função para editar categoria
 
@@ -117,25 +117,3 @@ categoryFilterRegister.addEventListener("keyup", () => {
   showCategories(categoryFiltered);
   cleanInput();
 });
-
-// Função salvar despesas
-
-const arrExpense = [];
-const stats = false;
-let cod = 0;
-
-function saveExpense() {
-  const objetExpense = {
-    dataVencimento: dateExpense(dueDateAddExpense.value),
-    despesa: valueAddExpense.value,
-    valor: valueAddExpenseMoney.value,
-    status: stats,
-    codigo: cod,
-  };
-  cod++;
-  arrExpense.push(objetExpense);
-  insertExpenseInHtml(arrExpense);
-  saveLocalExpense();
-  cleanInput();
-}
-buttonSaveAddExpense.addEventListener("click", () => saveExpense());
