@@ -121,7 +121,7 @@ buttonSaveAddExpense.onclick = function () {
 
 function exibirMensagemUsuario(
   sucesso = true,
-  mensagem = "Resposta com sucesso"
+  mensagem = "Cadastro realizado com sucesso"
 ) {
   let classeAtual = buttonSaveAddExpense.getAttribute("class");
   classeAtual = sucesso
